@@ -31,6 +31,20 @@ export async function rpc(method, params = []) {
   }
   throw last || new Error('Solana did not answer');
 }
+// history calls: some public nodes answer an empty list or null instead of an error, so try the next one
+export async function rpcFull(method, params = []) {
+  let last = null, err;
+  for (const url of RPCS()) {
+    try {
+      const r = await call(url, method, params, 10000);
+      if (r && (!Array.isArray(r) || r.length)) return r;
+      last = r;
+    } catch (e) { err = e; }
+  }
+  if (last !== null && last !== undefined) return last;
+  if (err) throw err;
+  return last;
+}
 // a signed transaction goes to every RPC at once; the first signature back wins
 export async function broadcast(b64) {
   const tries = RPCS().map(u => call(u, 'sendTransaction', [b64, { encoding: 'base64', skipPreflight: true, maxRetries: 5 }], 8000));
@@ -74,7 +88,7 @@ export async function scan(addr, emit) {
   // READ: every signature we can see, up to three pages
   const sigs = []; let before;
   for (let page = 0; page < 3; page++) {
-    const r = await rpc('getSignaturesForAddress', [addr, { limit: 1000, ...(before ? { before } : {}) }]);
+    const r = await rpcFull('getSignaturesForAddress', [addr, { limit: 1000, ...(before ? { before } : {}) }]);
     sigs.push(...r); if (r.length < 1000) break; before = r[r.length - 1].signature;
   }
   const capped = sigs.length >= 3000;
@@ -94,7 +108,7 @@ export async function scan(addr, emit) {
   let funder = null, fundedAt = null;
   if (!capped) {
     const old = sigs[sigs.length - 1];
-    const tx = await rpc('getTransaction', [old.signature, { encoding: 'jsonParsed', maxSupportedTransactionVersion: 0 }]).catch(() => null);
+    const tx = await rpcFull('getTransaction', [old.signature, { encoding: 'jsonParsed', maxSupportedTransactionVersion: 0 }]).catch(() => null);
     funder = funderOf(tx, addr); fundedAt = old.blockTime || null;
   }
   emit({ step: 'funding', funder, at: fundedAt, capped });
@@ -109,7 +123,7 @@ export async function scan(addr, emit) {
   emit({ step: 'habits', hours, peak, busiest });
 
   // LINKS: which apps it uses and who it keeps sending SOL to or getting SOL from (last 25 transactions)
-  const recent = await mapLimit(sigs.slice(0, 25), 5, s => rpc('getTransaction', [s.signature, { encoding: 'jsonParsed', maxSupportedTransactionVersion: 0 }]));
+  const recent = await mapLimit(sigs.slice(0, 25), 4, s => rpcFull('getTransaction', [s.signature, { encoding: 'jsonParsed', maxSupportedTransactionVersion: 0 }]));
   const apps = new Map(), cps = new Map();
   for (const tx of recent) {
     if (!tx) continue;
