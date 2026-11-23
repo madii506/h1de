@@ -446,5 +446,5 @@ export function initDesk({ api, say, onMain, onMove }) {
   listen(); paintMain(); paintGhosts(); paintPane();
   if (ghosts.length) refresh();
   setInterval(() => { if (!document.hidden && (main || ghosts.length)) refresh(); }, 25000);
-  return { get main() { return main?.address || null; }, connectFirst: () => wallets[0] && connect(wallets[0]) };
+  return { get main() { return main?.address || null; }, get name() { return main?.w.name || null; }, list: () => wallets.slice(), connect: i => connect(wallets[i]), disconnect, mobile };
 }

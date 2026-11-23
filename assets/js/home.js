@@ -80,7 +80,8 @@ function enter(to, instant) {
 }
 function jump(id, instant) { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: instant || reduced ? 'auto' : 'smooth', block: 'start' }); }
 $('#gEnter').onclick = () => enter('notice');
-$('#gGo').onclick = () => enter('desk');
+$('#gConnect').onclick = e => pickWallet(e.currentTarget);
+$('#nConnect').onclick = e => (desk.main ? (enter(), jump('desk')) : pickWallet(e.currentTarget));
 addEventListener('wheel', e => { if (!entered && e.deltaY > 4) enter(); }, { passive: true });
 let ty0 = null;
 addEventListener('touchstart', e => { ty0 = e.touches[0].clientY; }, { passive: true });
@@ -286,7 +287,34 @@ async function card(f) {
 }
 
 // ---------- 04 the desk ----------
-const desk = initDesk({ api, say, onMain: addr => { sMine.hidden = !addr; }, onMove: () => loadStats() });
+const desk = initDesk({ api, say, onMain: addr => { sMine.hidden = !addr; paintConnect(addr); }, onMove: () => loadStats() });
+// connect from the gate or the nav: one wallet connects at once, several open a small picker
+const wpick = $('#wpick');
+function shortA(a) { return a.slice(0, 4) + '…' + a.slice(-4); }
+function paintConnect(addr) {
+  $('#gConnect').textContent = addr ? shortA(addr) + ' · connected' : 'Connect wallet';
+  $('#nConnect').textContent = addr ? shortA(addr) : 'Connect';
+  $('#gConnect').classList.toggle('addr', !!addr); $('#nConnect').classList.toggle('addr', !!addr);
+}
+function pickWallet(anchor) {
+  if (desk.main) { wpick.hidden = true; enter(); jump('desk'); return; }
+  const ws = desk.list();
+  if (ws.length === 1) { desk.connect(0); return; }
+  const url = encodeURIComponent(location.href), ref = encodeURIComponent(location.origin);
+  wpick.innerHTML = ws.length
+    ? ws.map((w, i) => `<button class="btn" type="button" data-i="${i}">${w.icon ? `<img src="${esc(w.icon)}" alt="">` : ''}${esc(w.name)}</button>`).join('')
+    : desk.mobile
+      ? `<p class="note-s">Open H1DE inside your wallet's browser to connect.</p><a class="btn" href="https://phantom.app/ul/browse/${url}?ref=${ref}">Open in Phantom</a><a class="btn" href="https://solflare.com/ul/v1/browse/${url}?ref=${ref}">Open in Solflare</a>`
+      : `<p class="note-s">No Solana wallet in this browser.</p><a class="btn" href="https://phantom.com/download" target="_blank" rel="noopener">Get Phantom</a><a class="btn" href="https://solflare.com/download" target="_blank" rel="noopener">Get Solflare</a>`;
+  wpick.querySelectorAll('[data-i]').forEach(b => { b.onclick = () => { wpick.hidden = true; desk.connect(+b.dataset.i); }; });
+  wpick.hidden = false;
+  const r = anchor.getBoundingClientRect(), w = Math.max(250, r.width);
+  wpick.style.width = w + 'px';
+  wpick.style.left = Math.min(innerWidth - w - 12, Math.max(12, r.left)) + 'px';
+  wpick.style.top = (r.bottom + 8) + 'px';
+}
+document.addEventListener('pointerdown', e => { if (!wpick.hidden && !wpick.contains(e.target) && !e.target.closest('#gConnect,#nConnect')) wpick.hidden = true; });
+addEventListener('scroll', () => { if (!wpick.hidden) wpick.hidden = true; }, { passive: true });
 
 // ---------- 06 agents: a real MCP call from the page ----------
 const cOut = $('#cOut');
