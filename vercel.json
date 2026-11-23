@@ -1,0 +1,50 @@
+{
+  "cleanUrls": true,
+  "functions": {
+    "api/h1de.js": {
+      "maxDuration": 60
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/:op(stats|scan|rpc|route|swap|mcp)",
+      "destination": "/api/h1de?op=:op"
+    },
+    {
+      "source": "/agent.txt",
+      "destination": "/api/h1de?op=agent"
+    },
+    {
+      "source": "/llms.txt",
+      "destination": "/api/h1de?op=agent"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "cache-control",
+          "value": "public, max-age=600, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "x-content-type-options",
+          "value": "nosniff"
+        },
+        {
+          "key": "referrer-policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "permissions-policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
+      ]
+    }
+  ]
+}

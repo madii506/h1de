@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>H1DE</title>
+<meta name="description" content="Every move you make on-chain is watched. We h1de it. Ghost wallets, private routes, no trail back to you.">
+<meta name="theme-color" content="#09090a">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/fav-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/fav-64.png">
+<link rel="apple-touch-icon" href="/assets/img/fav-180.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="H1DE">
+<meta property="og:description" content="Every move you make on-chain is watched. We h1de it.">
+<meta property="og:image" content="/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="H1DE">
+<meta name="twitter:description" content="Every move you make on-chain is watched. We h1de it.">
+<meta name="twitter:image" content="/assets/img/og.png">
+<link rel="preload" href="/assets/fonts/anton.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/jbm.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/site.css?v=2">
+<script src="/assets/vendor/nacl-fast.min.js"></script>
+</head>
+<body class="gated">
+<canvas id="world" aria-hidden="true"></canvas>
+<div class="lock" id="reticle" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b><em></em></div>
+<div class="lock" id="lock" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b><em></em></div>
+
+<section id="gate" aria-label="H1DE">
+  <h1 class="mark" aria-label="H1DE"><span>H</span><span>1</span><span>D</span><span>E</span><i class="scanline" aria-hidden="true"></i><i class="scantrail" aria-hidden="true"></i></h1>
+  <div class="g-act">
+    <button class="btn red" id="gGo" type="button">H1de a move</button>
+    <button class="btn" id="gEnter" type="button">Enter</button>
+  </div>
+  <div class="g-count"><i></i><b id="gCount">—</b><span>moves h1dden</span></div>
+</section>
+
+<header id="nav">
+  <div></div>
+  <nav class="links" aria-label="Sections">
+    <a href="#notice">Notice</a><a href="#trace">Trace</a><a href="#procedure">Procedure</a><a href="#scan">Scan</a><a href="#desk">H1de</a><a href="#archive">Archive</a><a href="#agents">Agents</a><a href="#limits">Limits</a><a href="#faq">FAQ</a>
+  </nav>
+  <div class="nav-r"><a class="btn red sm" href="#desk">H1de a move</a></div>
+</header>
+
+<aside id="rail" aria-hidden="true">
+  <a href="#notice"><i></i>00 <span>Notice</span></a><a href="#trace"><i></i>01 <span>Trace</span></a><a href="#procedure"><i></i>02 <span>Procedure</span></a><a href="#scan"><i></i>03 <span>Scan</span></a><a href="#desk"><i></i>04 <span>H1de</span></a>
+  <a href="#archive"><i></i>05 <span>Archive</span></a><a href="#agents"><i></i>06 <span>Agents</span></a><a href="#limits"><i></i>07 <span>Limits</span></a><a href="#faq"><i></i>08 <span>FAQ</span></a><a href="#next"><i></i>09 <span>Gone</span></a>
+</aside>
+
+<main id="site">
+  <section id="notice" class="pin shade" data-cam="notice" data-cam2="notice2" style="--h:300vh">
+    <div class="stage">
+      <p class="eyebrow">00 — Notice</p>
+      <p class="redact" id="redact">Every move you make on-chain is *watched.* Every buy, every sell, every transfer is read, labeled and filed under your wallet. The chain never forgets. So we *h1de* it.</p>
+    </div>
+  </section>
+
+  <section id="trace" class="pin shade" data-cam="specimen" style="--h:340vh">
+    <div class="stage tr">
+      <div>
+        <p class="eyebrow">01 — Trace</p>
+        <h2>How one wallet<br>becomes a person.</h2>
+        <ol class="steps" id="steps">
+          <li><b>Funded from one account</b><span>The first SOL came from somewhere with a name on it.</span></li>
+          <li><b>Same hours, every night</b><span>Activity lands in the same four hours. Habits are fingerprints.</span></li>
+          <li><b>Same counterparties</b><span>It keeps paying the same wallets. Wallets that pay each other get grouped.</span></li>
+          <li><b>One label</b><span>Enough links and the label sticks: one person, every wallet.</span></li>
+          <li class="cut"><b>H1dden</b><span>Cut the link and the file goes blank.</span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section id="procedure" class="pin" data-cam="procedure" data-cam2="procedure2" style="--h:560vh">
+    <div class="stage">
+      <div class="hs-head">
+        <div><p class="eyebrow">02 — Procedure</p><h2>Six moves. No trail.</h2></div>
+        <div class="count"><b id="hsNo">01</b> / 06</div>
+      </div>
+      <div class="track" id="track">
+        <article class="card"><div class="top"><span class="no">01</span><span class="tg">YOUR DEVICE</span></div><canvas width="160" height="100" data-anim="ghost"></canvas><h3>Ghost</h3><p>A fresh wallet is born in your browser. Its key never leaves your device.</p><i class="hole"></i></article>
+        <article class="card"><div class="top"><span class="no">02</span><span class="tg">NO LINK</span></div><canvas width="160" height="100" data-anim="route"></canvas><h3>Route in</h3><p>Your wallet pays a one-time deposit address. A solver pays your ghost from its own wallet.</p><i class="hole"></i></article>
+        <article class="card"><div class="top"><span class="no">03</span><span class="tg">ANY COIN</span></div><canvas width="160" height="100" data-anim="move"></canvas><h3>Move</h3><p>Buy, sell, swap or send from the ghost. Every move is signed by a key that isn't yours.</p><i class="hole"></i></article>
+        <article class="card"><div class="top"><span class="no">04</span><span class="tg">NO PATTERN</span></div><canvas width="160" height="100" data-anim="wait"></canvas><h3>Wait</h3><p>Let time pass and change the amounts. Timing and size are what link wallets now.</p><i class="hole"></i></article>
+        <article class="card"><div class="top"><span class="no">05</span><span class="tg">CLEAN EXIT</span></div><canvas width="160" height="100" data-anim="exit"></canvas><h3>Route out</h3><p>Send what you made to any wallet through another route. The trail stops at the solver.</p><i class="hole"></i></article>
+        <article class="card"><div class="top"><span class="no">06</span><span class="tg">NOTHING KEPT</span></div><canvas width="160" height="100" data-anim="burn"></canvas><h3>Burn</h3><p>Forget the ghost when you're done. No account, no email, no list of who.</p><i class="hole"></i></article>
+      </div>
+      <div class="hs-ruler"><i id="hsbar"></i></div>
+    </div>
+  </section>
+
+  <section id="scan" class="band" data-cam="file">
+    <div class="tool">
+      <p class="eyebrow">03 — Scan</p>
+      <h2>See what they see.</h2>
+      <form class="f-form" id="sForm" autocomplete="off">
+        <input id="sIn" name="w" maxlength="44" spellcheck="false" autocapitalize="off" placeholder="any Solana wallet" aria-label="Solana wallet address">
+        <button class="btn red" type="submit" id="sGo">Scan</button>
+        <button class="btn" type="button" id="sMine" hidden>Mine</button>
+      </form>
+      <ol class="log" id="slog"></ol>
+      <div class="out" id="sout"></div>
+    </div>
+  </section>
+
+  <section id="desk" class="band alt" data-cam="file">
+    <p class="eyebrow">04 — H1de</p>
+    <h2>Every move you make,<br>we h1de it.</h2>
+    <div class="desk">
+      <div class="d-left">
+        <div class="box">
+          <div class="box-h"><span>Your wallet</span></div>
+          <div id="mainW"></div>
+        </div>
+        <div class="box">
+          <div class="box-h"><span>Ghosts</span><button class="btn sm" type="button" id="gNew">New ghost</button></div>
+          <ol class="ghosts" id="ghosts"></ol>
+          <div class="g-tools"><button class="lnk" type="button" id="gBackup">Back up keys</button><button class="lnk" type="button" id="gImport">Import a key</button></div>
+          <div class="imp" id="impBox" hidden><input id="impIn" spellcheck="false" autocomplete="off" placeholder="secret key (base58 or [..] array)" aria-label="Secret key"><button class="btn sm" type="button" id="impGo">Import</button></div>
+        </div>
+      </div>
+      <div class="d-right">
+        <div class="tabs" role="tablist" id="tabs">
+          <button role="tab" type="button" data-t="in" class="on">Route in</button><button role="tab" type="button" data-t="swap">Swap</button><button role="tab" type="button" data-t="send">Send</button><button role="tab" type="button" data-t="out">Route out</button>
+        </div>
+        <div class="pane" id="pane"></div>
+        <ol class="log" id="dlog" aria-live="polite"></ol>
+      </div>
+    </div>
+  </section>
+
+  <section id="archive" class="band" data-cam="index" data-cam2="index2">
+    <p class="eyebrow">05 — Archive</p>
+    <h2>We keep counts.<br>Never who.</h2>
+    <p class="lede">Every covered head in the hall is a move someone h1d. H1DE stores how many, never an address, an amount per person or a signature.</p>
+    <div class="meters">
+      <div><b id="mMoves">—</b><span>Moves h1dden</span></div>
+      <div><b id="mRouted">—</b><span>SOL routed</span></div>
+      <div><b id="mSwaps">—</b><span>Swaps from ghosts</span></div>
+      <div><b id="mScans">—</b><span>Wallets scanned</span></div>
+    </div>
+  </section>
+
+  <section id="agents" class="band alt" data-cam="agents">
+    <p class="eyebrow">06 — Agents</p>
+    <h2>Agents move money too.</h2>
+    <div class="ag">
+      <ul class="ep">
+        <li><span class="m">POST</span><code>/api/scan</code><p>The exposure file of any wallet, streamed step by step. Nothing about the wallet is stored.</p></li>
+        <li><span class="m">POST</span><code>/api/route</code><p>Quote a private route between two wallets through NEAR Intents. Dry quotes move nothing.</p></li>
+        <li><span class="m">GET</span><code>/api/stats</code><p>Moves h1dden, SOL routed, wallets scanned. Counts only.</p></li>
+        <li><span class="m">POST</span><code>/api/mcp</code><p>An MCP server with three tools: scan_wallet, route_quote and h1de_stats.</p></li>
+        <li><span class="m">GET</span><code>/agent.txt</code><p>Plain-text instructions for any agent that lands here.</p></li>
+      </ul>
+      <div>
+        <div class="con">
+          <form id="cForm" autocomplete="off"><span>POST /api/mcp</span><input id="cIn" spellcheck="false" autocapitalize="off" placeholder="wallet to scan" aria-label="Wallet for scan_wallet"><button class="btn sm" type="submit">Run</button></form>
+          <pre id="cOut" aria-live="polite"></pre>
+        </div>
+        <p class="cfg-l">MCP config</p>
+        <div class="cfg"><pre id="mcpCfg"></pre><button class="btn sm" type="button" id="mcpCopy">Copy</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="limits" class="band" data-cam="fees">
+    <p class="eyebrow">07 — Limits</p>
+    <h2>What it h1des.<br>What it can't.</h2>
+    <div class="lim">
+      <div><h3>H1des</h3><ul>
+        <li>The on-chain link between your wallet and your ghost.</li>
+        <li>Which wallet made a buy, a sell, a swap or a send.</li>
+        <li>Your main wallet's history from anyone watching the ghost.</li>
+        <li>Who you are from us: no account, no email, no list of addresses.</li>
+      </ul></div>
+      <div><h3>Can't h1de</h3><ul>
+        <li>The route network (NEAR Intents and its solvers) sees both ends of a route.</li>
+        <li>Equal amounts at close times can be matched. Split them and wait.</li>
+        <li>Sending from a ghost straight to your main wallet links them again.</li>
+        <li>Your IP is seen by the RPC and by this site. Use a VPN if that matters.</li>
+        <li>Ghost keys live in this browser only. Clear it and they are gone, so back them up.</li>
+      </ul></div>
+    </div>
+    <div class="cols">
+      <div><h3>What it costs</h3><p>Routes cost the solver network about 0.1%. Swaps go through Jupiter at its normal fees. H1DE takes nothing from your moves.</p></div>
+      <div><h3>Who pays for it</h3><p>Creator fees from $H1DE pay for the RPC, the watcher and this site. Nothing here pays holders or promises a price.</p></div>
+      <div><h3>What it is</h3><p><b>H1DE is independent experimental software.</b> It is not affiliated with NEAR, Jupiter or any wallet. Use small amounts first.</p></div>
+    </div>
+    <div class="ca" id="ca" hidden></div>
+  </section>
+
+  <section id="faq" class="band alt" data-cam="faq">
+    <p class="eyebrow">08 — FAQ</p>
+    <h2>Asked in private.</h2>
+    <div class="faq">
+      <div>
+        <details><summary>What is H1DE?</summary><p>Ghost wallets and private routes for Solana. Your wallet pays a one-time NEAR Intents deposit address, a solver pays your ghost from its own wallet, and every move after that comes from a wallet with no on-chain link to you.</p></details>
+        <details><summary>Is it a mixer?</summary><p>No pool and no custody. Each route is a cross-wallet swap through NEAR Intents: a solver fills it from its own funds. If a route fails, the SOL goes back to the wallet that paid it.</p></details>
+        <details><summary>Do you hold my funds or keys?</summary><p>No. Ghost keys are made and kept in your browser. Your main wallet signs its own payments. H1DE builds transactions and passes them on; it never sees a key.</p></details>
+        <details><summary>What if I clear my browser?</summary><p>The ghosts are gone with it, and so is anything they hold. Press Back up keys and keep the file somewhere safe before you fund a ghost.</p></details>
+      </div>
+      <div>
+        <details><summary>What does the scan read?</summary><p>Only public chain data: the wallet's signatures, balance, token count, the transaction that first funded it and its last 25 transactions. H1DE stores none of it. The file is written fresh each time.</p></details>
+        <details><summary>Which wallets work?</summary><p>Phantom, Solflare, Backpack and any wallet that speaks Wallet Standard. Your wallet only ever pays a route's deposit address.</p></details>
+        <details><summary>Is this legal?</summary><p>Privacy is normal. Breaking the law is not. Don't use H1DE to hide stolen funds or dodge sanctions. H1DE is independent experimental software.</p></details>
+        <details><summary>Is there a token?</summary><p>$H1DE. The contract address appears on this site at launch. Anyone posting one before that is not us.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section id="next" class="pin" data-cam="next" style="--h:230vh">
+    <div class="stage">
+      <p class="fin-no">Not found</p>
+      <h2 class="huge">Now you don't.</h2>
+      <div class="fin-act"><a class="btn red" href="#desk">H1de a move</a><a class="btn" href="#scan">Scan my wallet</a></div>
+    </div>
+  </section>
+</main>
+<div id="live" class="sr" aria-live="polite"></div>
+<script type="module" src="/assets/js/home.js?v=2"></script>
+</body>
+</html>
