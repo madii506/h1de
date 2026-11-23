@@ -6,7 +6,7 @@ import { silhouette } from './dither.js';
 const $ = (s, r = document) => r.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const sleep = ms => new Promise(r => setTimeout(r, ms));
-const SOL_MINT = 'So11111111111111111111111111111111111111112', USDC_MINT = 'EPjFWdd5AufqSSqeM2qrxsbHddK8UUeqqQLRQsT8hiZb';
+const SOL_MINT = 'So11111111111111111111111111111111111111112', USDC_MINT = 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v';
 const KEY = 'h1de.ghosts', MAINKEY = 'h1de.main';
 const mobile = matchMedia('(max-width: 760px)').matches;
 
