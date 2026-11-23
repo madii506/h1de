@@ -1,5 +1,7 @@
 # H1DE
 
+Live: https://h1de.vercel.app
+
 Every move you make on-chain is watched. We h1de it.
 
 - **Scan**: read the public trail of any Solana wallet (first funder, active hours, apps, repeat counterparties) and get an exposure file. Nothing about the wallet is stored.
