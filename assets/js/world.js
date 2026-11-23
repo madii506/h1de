@@ -143,7 +143,7 @@ export function createWorld(canvas, opt = {}) {
     g.computeVertexNormals();
     return g;
   })();
-  const order2 = live.filter(b => !b.spec);
+  const order2 = live.filter(b => !b.spec).sort((p, q) => Math.hypot(p.x * 1.4, p.z + 70) - Math.hypot(q.x * 1.4, q.z + 70));   // sheets spread out from the middle of the archive view
   const shrouds = new THREE.InstancedMesh(shroudGeo, scanify(new THREE.MeshLambertMaterial({ color: 0xc4c4c4 })), order2.length);
   shrouds.frustumCulled = false;
   order2.forEach((b, k) => shrouds.setMatrixAt(k, Z0));
