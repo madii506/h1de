@@ -6,6 +6,7 @@
 <title>H1DE</title>
 <meta name="description" content="Every move you make on-chain is watched. We h1de it. Ghost wallets, private routes, no trail back to you.">
 <meta name="theme-color" content="#09090a">
+<link rel="icon" type="image/svg+xml" href="/assets/img/fav.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/fav-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="/assets/img/fav-64.png">
 <link rel="apple-touch-icon" href="/assets/img/fav-180.png">
@@ -31,7 +32,7 @@
 <section id="gate" aria-label="H1DE">
   <h1 class="mark" aria-label="H1DE"><span>H</span><span>1</span><span>D</span><span>E</span><i class="scanline" aria-hidden="true"></i><i class="scantrail" aria-hidden="true"></i></h1>
   <div class="g-act">
-    <button class="btn red" id="gGo" type="button">H1de a move</button>
+    <button class="btn red" id="gConnect" type="button">Connect wallet</button>
     <button class="btn" id="gEnter" type="button">Enter</button>
   </div>
   <div class="g-count"><i></i><b id="gCount">—</b><span>moves h1dden</span></div>
@@ -42,7 +43,7 @@
   <nav class="links" aria-label="Sections">
     <a href="#notice">Notice</a><a href="#trace">Trace</a><a href="#procedure">Procedure</a><a href="#scan">Scan</a><a href="#desk">H1de</a><a href="#archive">Archive</a><a href="#agents">Agents</a><a href="#limits">Limits</a><a href="#faq">FAQ</a>
   </nav>
-  <div class="nav-r"><a class="btn red sm" href="#desk">H1de a move</a></div>
+  <div class="nav-r"><button class="btn sm" id="nConnect" type="button">Connect</button><a class="btn red sm" href="#desk">H1de a move</a></div>
 </header>
 
 <aside id="rail" aria-hidden="true">
@@ -219,6 +220,7 @@
     </div>
   </section>
 </main>
+<div id="wpick" class="w-pick" hidden></div>
 <div id="live" class="sr" aria-live="polite"></div>
 <script type="module" src="/assets/js/home.js?v=2"></script>
 </body>
